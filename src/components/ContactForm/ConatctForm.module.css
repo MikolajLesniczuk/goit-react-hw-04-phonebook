@@ -1,0 +1,42 @@
+.contener {
+  text-align: center;
+  background-color: aqua;
+  margin-top: 0px;
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  margin: 10px auto;
+  width: 200px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.button {
+  width: 210px;
+  margin: 20px auto;
+  background: yellowgreen;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+ul {
+  list-style: none;
+}
+
+.title {
+  background-color: aqua;
+  margin-top: 0px;
+  padding-top: 30px;
+  font-size: 30px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+}
