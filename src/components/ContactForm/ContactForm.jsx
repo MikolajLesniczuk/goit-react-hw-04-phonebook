@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import s from './ConatctForm.module.css';
 
 const INITIAL_STATE = {
@@ -8,74 +8,72 @@ const INITIAL_STATE = {
   number: '',
 };
 
-class ContactForm extends Component {
-  nanoidID = nanoid();
+const ContactForm = ({ addContact }) => {
+  const nanoidID = nanoid();
 
-  state = {
+  const [contact, setContact] = useState({
     contacts: [],
     name: '',
     number: '',
-  };
+  });
 
-  handleSubmit = e => {
+  const { name, number } = contact;
+
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.addContact(this.state);
-
-    this.setState({ ...INITIAL_STATE });
+    addContact(contact);
+    setContact({ ...INITIAL_STATE });
   };
 
-  handleChange = e => {
+  const handleChange = e => {
     const { value, name } = e.target;
-    //   console.log(value)
-    this.setState(prevState => ({
+    setContact(prevState => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  render() {
-    return (
-      <>
-        <div>
-          <form className={s.flex} onSubmit={this.handleSubmit}>
-            <label className={s.label} htmlFor={this.nanoidID}>
-              NAME
-            </label>
-            <input
-              className={s.input}
-              id={this.nanoidID}
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
+  return (
+    <>
+      <div>
+        <form className={s.flex} onSubmit={handleSubmit}>
+          <label className={s.label} htmlFor={nanoidID}>
+            NAME
+          </label>
+          <input
+            className={s.input}
+            id={nanoidID}
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            value={name}
+            onChange={handleChange}
+          />
 
-            <label className={s.label} htmlFor={this.nanoidID}>
-              NUMBER
-            </label>
-            <input
-              className={s.input}
-              id={this.nanoidID}
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={this.state.number}
-              onChange={this.handleChange}
-            />
+          <label className={s.label} htmlFor={nanoidID}>
+            NUMBER
+          </label>
+          <input
+            className={s.input}
+            id={nanoidID}
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            value={number}
+            onChange={handleChange}
+          />
 
-            <button className={s.button} type="submit">
-              Add Contact
-            </button>
-          </form>
-        </div>
-      </>
-    );
-  }
-}
+          <button className={s.button} type="submit">
+            Add Contact
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
 
-export default ContactForm;
+export { ContactForm };
