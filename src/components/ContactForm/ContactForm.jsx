@@ -2,35 +2,25 @@ import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import s from './ConatctForm.module.css';
 
-const INITIAL_STATE = {
-  contacts: [],
-  name: '',
-  number: '',
-};
-
 const ContactForm = ({ addContact }) => {
   const nanoidID = nanoid();
-
-  const [contact, setContact] = useState({
-    contacts: [],
-    name: '',
-    number: '',
-  });
-
-  const { name, number } = contact;
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
+    const contact = { name, number };
     addContact(contact);
-    setContact({ ...INITIAL_STATE });
+    setName('');
+    setNumber('');
   };
 
-  const handleChange = e => {
-    const { value, name } = e.target;
-    setContact(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const changeName = e => {
+    setName(e.target.value);
+  };
+
+  const changeNumber = e => {
+    setNumber(e.target.value);
   };
 
   return (
@@ -49,7 +39,7 @@ const ContactForm = ({ addContact }) => {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
-            onChange={handleChange}
+            onChange={changeName}
           />
 
           <label className={s.label} htmlFor={nanoidID}>
@@ -64,7 +54,7 @@ const ContactForm = ({ addContact }) => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            onChange={handleChange}
+            onChange={changeNumber}
           />
 
           <button className={s.button} type="submit">
